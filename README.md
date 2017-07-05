@@ -1,2 +1,5 @@
 # ownnote-mobile
-Mobile app for ownNote
+
+Cordova based mobile app for: https://github.com/Fmstrat/ownnote
+
+

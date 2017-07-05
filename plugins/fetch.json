@@ -1,0 +1,76 @@
+{
+    "com.synconset.cordovaHTTP": {
+        "source": {
+            "type": "registry",
+            "id": "com.synconset.cordovaHTTP"
+        }
+    },
+    "org.apache.cordova.file": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/apache/cordova-plugin-file",
+            "subdir": ".",
+            "ref": "r0.2.5"
+        }
+    },
+    "com.synconset.imagepicker": {
+        "source": {
+            "type": "registry",
+            "id": "com.synconset.imagepicker"
+        }
+    },
+    "com.triarc.sqlitePlugin": {
+        "source": {
+            "type": "registry",
+            "id": "com.triarc.sqlitePlugin"
+        }
+    },
+    "net.yoik.cordova.plugins.screenorientation": {
+        "source": {
+            "type": "registry",
+            "id": "net.yoik.cordova.plugins.screenorientation"
+        }
+    },
+    "org.apache.cordova.inappbrowser": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.inappbrowser"
+        }
+    },
+    "org.apache.cordova.network-information": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.network-information"
+        }
+    },
+    "org.apache.cordova.plugin.softkeyboard": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.plugin.softkeyboard"
+        }
+    },
+    "org.apache.cordova.globalization": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.globalization"
+        }
+    },
+    "com.ionic.keyboard": {
+        "source": {
+            "type": "registry",
+            "id": "com.ionic.keyboard"
+        }
+    },
+    "org.apache.cordova.console": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.console"
+        }
+    },
+    "org.apache.cordova.statusbar": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.statusbar"
+        }
+    }
+}

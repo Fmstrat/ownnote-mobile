@@ -1,0 +1,53 @@
+#1 of #2 notes
+Allow all SSL Certificates
+An application error has occured. Please report it here.
+Are you sure you want to delete this note?
+Bad request. Potential fixes are using a different host name or editing the trusted_domain setting in ownCloud.
+Cancel
+Certificates
+Clear cached notes
+Create
+Delete
+Delete Note?
+Disable offline
+Edit
+Edit Note
+Enable offline
+Error
+Full details can be found in your logcat:
+Group
+Groups
+Internel Server Error. This could be due to an unsigned certificate. You may wish to try allowing all certificates.
+Invalid username and/or password, or cannot connect to server.
+Loading
+Loading notes...
+Login
+Logout
+Name
+Network issue or invalid SSL certificate.
+New Note
+Notes
+OK
+Password
+Rename
+Requested method not allowed. Please make sure you are running the latest version of ownNote on your server.
+Requested URL not found.
+Save
+Save notes for offline use
+Server
+Sync
+The following error has occured while connecting to the server.
+There are known issues with ownNote for Android when using ownNote server version less than #. Please update ownNote server to the latest version.
+This action cannot be undone.
+This note is empty.
+This note is not currently synchronized for offline use.
+Unknown Error.
+Username
+Using a self-signed certificate?
+Version Mismatch
+View Note
+While you can set ownNote and other Apps to accept all SSL certificates, you should consider formally importing your certificate using the free Android application, CAdroid, available at the link below for increased security.
+Not Grouped
+PREVIOUS PAGE
+NEXT PAGE
+All

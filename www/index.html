@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+	<!-- Removed for font sizes: target-densitydpi=device-dpi -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+		<link rel="stylesheet" href="themes/ownnote.min.css" />
+		<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+        <link rel="stylesheet" type="text/css" href="jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+        <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
+        <script type="text/javascript" src="jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script type="text/javascript" src="js/Autolinker.js"></script>
+        <script type="text/javascript" src="js/version-compare.js"></script>
+        <script type="text/javascript" src="js/l10n.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <title>ownNote</title>
+    </head>
+    <body>
+
+		<div id="header" data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="b">
+			<img onclick="goHome()" src="img/logo-icon-offline.png" class="ui-btn-left" data-id="logo" id="logo" />
+			<a href="javascript:backButton()" data-role="button" data-icon="arrow-l" class="translate" id="backarrow" style="display:none">Back</a>
+			<h1>Notes</h1>
+			<div id="header-listing" class="ui-btn-right" style="display: none">
+				<img onclick="toggleMenu('listing')" src="img/menu.png" class="ui-btn-right" data-id="menu-button" id="menu-button" />
+			</div>
+			<div id="header-grouplisting" class="ui-btn-right" style="display: none">
+				<img onclick="toggleMenu('grouplisting')" src="img/menu.png" class="ui-btn-right" data-id="menu-button" id="menu-button" />
+			</div>
+			<div id="header-viewnote" class="ui-btn-right" style="display: none">
+				<img onclick="toggleMenu('viewnote')" src="img/menu.png" class="ui-btn-right" data-id="menu-button" id="menu-button" />
+			</div>
+			<div id="header-editnote" class="ui-btn-right" style="display: none">
+				<img onclick="toggleMenu('editnote')" src="img/menu.png" class="ui-btn-right" data-id="menu-button" id="menu-button" />
+			</div>
+		</div>
+        
+        <div class="app" id="noteslisting" data-role="page" data-title="Notes" data-theme="a">
+			<div data-role="ui-content" data-inset="true" data-theme="a">
+				<ul id="noteslist" data-role="listview">
+				</ul>
+			</div>
+			<div data-transition="none" data-corners="true" data-shadow="true" data-disabled="false" data-role="popup" id="popupcreate" data-overlay-theme="a" data-theme="a" style="max-width:400px;" class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow">
+				<div role="banner" data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a">
+					<h2 aria-level="1" role="heading" class="ui-title translate">New Note</h2>
+				</div>
+				<div role="main" data-role="content" data-theme="a" class="ui-corner-bottom ui-content ui-body-d">
+					<fieldset>
+						<label for="newfilename" class="translate">Name:</label>
+						<input type="text" name="newfilename" id="newfilename" value="">
+						<p>
+						<label for="newgroup" class="translate">Group:</label>
+						<input type="text" name="newgroup" id="newgroup" value="">
+					</fieldset>
+					<a class="cancel ui-btn ui-btn-up-c ui-shadow ui-btn-corner-all ui-btn-inline" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-inline="true" data-rel="back" data-theme="a"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text translate">Cancel</span></span></a>    
+					<a onclick="createNote()" class="ui-btn ui-btn-up-b ui-shadow ui-btn-corner-all ui-btn-inline" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-inline="true" data-theme="a"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text translate">Create</span></span></a>  
+				</div>
+			</div>
+			<div data-transition="none" data-corners="true" data-shadow="true" data-disabled="false" data-role="popup" id="popuprenamegroup" data-overlay-theme="a" data-theme="a" style="max-width:400px;" class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow">
+				<div role="banner" data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a">
+					<h2 aria-level="1" role="heading" class="ui-title translate">Rename</h2>
+				</div>
+				<div role="main" data-role="content" data-theme="a" class="ui-corner-bottom ui-content ui-body-d">
+					<fieldset>
+						<label for="renamegroup" class="translate">Group:</label>
+						<input type="text" name="renamegroup" id="renamegroup" value="">
+					</fieldset>
+					<a class="cancel ui-btn ui-btn-up-c ui-shadow ui-btn-corner-all ui-btn-inline" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-inline="true" data-rel="back" data-theme="a"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text translate">Cancel</span></span></a>    
+					<a onclick="renameGroup()" class="ui-btn ui-btn-up-b ui-shadow ui-btn-corner-all ui-btn-inline" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-inline="true" data-theme="a"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text translate">Rename</span></span></a>  
+				</div>
+			</div>
+			<div data-transition="none" data-corners="true" data-shadow="true" data-disabled="false" data-role="popup" id="popupversion" data-overlay-theme="a" data-theme="a" style="max-width:400px;" class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow">
+				<div role="banner" data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a">
+					<h2 aria-level="1" role="heading" class="ui-title translate">Error</h2>
+				</div>
+				<div role="main" data-role="content" data-theme="a" class="ui-corner-bottom ui-content ui-body-d">
+					<h3 class="ui-title translate" id='versiontitle'>Version Mismatch</h3>
+					<p id="versiontext"></p>
+					<a class="ui-btn ui-btn-up-c ui-shadow ui-btn-corner-all ui-btn-inline" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-inline="true" data-rel="back" data-theme="a"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text translate">OK</span></span></a>    
+				</div>
+			</div>
+			<div data-transition="none" data-corners="true" data-shadow="true" data-disabled="false" data-role="popup" id="popupnotsynced" data-overlay-theme="a" data-theme="a" style="max-width:400px;" class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow">
+				<div role="banner" data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a">
+					<h2 aria-level="1" role="heading" class="ui-title translate">Offline</h2>
+				</div>
+				<div role="main" data-role="content" data-theme="a" class="ui-corner-bottom ui-content ui-body-d">
+					<p class="translate">This note is not currently synchronized for offline use.</p>
+					<a class="ui-btn ui-btn-up-c ui-shadow ui-btn-corner-all ui-btn-inline" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-inline="true" data-rel="back" data-theme="a"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text translate">OK</span></span></a>    
+				</div>
+			</div>
+			<div data-transition="none" data-corners="true" data-shadow="true" data-disabled="false" data-role="popup" id="popuploading" data-overlay-theme="a" data-theme="a" style="min-width:200px;max-width:400px;" class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow">
+				<div role="banner" data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a">
+					<h2 aria-level="1" role="heading" class="ui-title translate">Loading</h2>
+				</div>
+				<div role="main" data-role="content" data-theme="a" class="ui-corner-bottom ui-content ui-body-d">
+					<p id="loadingtext"></p>
+				</div>
+			</div>
+        </div>
+        
+        <div class="app" id="groupslisting" data-role="page" data-title="Groups" data-theme="a">
+			<div data-role="ui-content" data-inset="true" data-theme="a">
+				<ul id="groupslist" data-role="listview">
+				</ul>
+			</div>
+        </div>
+        
+        <div class="app" id="noteview" data-role="page" data-title="View Note" data-theme="a">
+			<div id="noteview-content" data-role="content" data-inset="true" data-theme="a">
+				<div id='viewable'>
+				</div>
+			</div>
+			<div data-transition="none" data-corners="true" data-shadow="true" data-disabled="false" data-role="popup" id="popupdelete" data-overlay-theme="a" data-theme="a" style="max-width:400px;" class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow">
+				<div role="banner" data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a">
+					<h2 aria-level="1" role="heading" class="ui-title translate">Delete Note?</h2>
+				</div>
+				<div role="main" data-role="content" data-theme="a" class="ui-corner-bottom ui-content ui-body-d">
+					<h3 class="ui-title translate">Are you sure you want to delete this note?</h3>
+					<p class="translate">This action cannot be undone.</p>
+					<a class="cancel ui-btn ui-btn-up-c ui-shadow ui-btn-corner-all ui-btn-inline" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-inline="true" data-rel="back" data-theme="a"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text translate">Cancel</span></span></a>    
+					<a onclick="deleteNote()" class="ui-btn ui-btn-up-b ui-shadow ui-btn-corner-all ui-btn-inline" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-inline="true" data-theme="a"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text translate">Delete</span></span></a>  
+				</div>
+			</div>
+			<div data-transition="none" data-corners="true" data-shadow="true" data-disabled="false" data-role="popup" id="popuprename" data-overlay-theme="a" data-theme="a" style="max-width:400px;" class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow">
+				<div role="banner" data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a">
+					<h2 aria-level="1" role="heading" class="ui-title translate">Rename</h2>
+				</div>
+				<div role="main" data-role="content" data-theme="a" class="ui-corner-bottom ui-content ui-body-d">
+					<fieldset>
+						<label for="filename" class="translate">Name:</label>
+						<input type="text" name="filename" id="filename" value="">
+						<p>
+						<label for="group" class="translate">Group:</label>
+						<input type="text" name="group" id="group" value="">
+					</fieldset>
+					<a class="cancel ui-btn ui-btn-up-c ui-shadow ui-btn-corner-all ui-btn-inline" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-inline="true" data-rel="back" data-theme="a"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text translate">Cancel</span></span></a>    
+					<a onclick="renameNote()" class="ui-btn ui-btn-up-b ui-shadow ui-btn-corner-all ui-btn-inline" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-inline="true" data-theme="a"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text translate">Rename</span></span></a>  
+				</div>
+			</div>
+        </div>
+
+        <div class="app" id="noteedit" data-role="page" data-title="Edit Note" data-theme="a">
+			<div data-role="ui-content" data-inset="true" data-theme="a">
+				<div id='editable-container'>
+					<div id='editable' class='editable'>
+					</div>
+				</div>
+			</div>
+        </div>
+        
+        <div class="app" id="login" data-role="page" data-title="Login" data-theme="a">
+			<div data-role="content" data-inset="true" data-theme="a">
+				<fieldset>
+					<label for="server" class="translate">Server:</label>
+					<input type="text" autocomplete="off" name="server" id="server" value="" />
+					<input type="checkbox" name="insecure" id="insecure" value="1" />
+					<label for="insecure" class="translate">Allow all SSL Certificates</label>
+					<a href="javascript:$('#popupselfsigned').popup('open')" class="translate">Using a self-signed certificate?</a>
+					<p>
+					<label for="email" class="translate">Username:</label>
+					<input type="text" autocomplete="off" name="username" id="username" value="" />
+					<label for="password" class="translate">Password:</label>
+					<input type="password" autocomplete="off" name="password" id="password" value="" />
+					<input type="checkbox" name="saveoffline" id="saveoffline" value="1" checked />
+					<label for="saveoffline" class="translate">Save notes for offline use</label>
+					<div id="loginbutton-container">
+						<input id="loginbutton" onclick="submitLogin()" class="translatebutton" type="button" value="Login" data-role="button" data-inline="true" />
+					</div>
+				</fieldset>
+			</div>
+			<div data-transition="none" data-corners="true" data-shadow="true" data-disabled="false" data-role="popup" id="popuperror" data-overlay-theme="a" data-theme="a" style="max-width:400px;" class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow">
+				<div role="banner" data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a">
+					<h2 aria-level="1" role="heading" class="ui-title translate">Error</h2>
+				</div>
+				<div role="main" data-role="content" data-theme="a" class="ui-corner-bottom ui-content ui-body-d">
+					<h3 class="ui-title translate" id='apierrortitle'>The following error has occured while connecting to the server.</h3>
+					<h3 class="ui-title" id='jserrortitle'><a href="http://goo.gl/78SQuQ" target="_blank" class="translate">An application error has occured. Please report it here.</a></h3>
+					<p id="errortext"></p>
+					<a class="ui-btn ui-btn-up-c ui-shadow ui-btn-corner-all ui-btn-inline" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-inline="true" data-rel="back" data-theme="a"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text translate">OK</span></span></a>    
+				</div>
+			</div>
+			<div data-transition="none" data-corners="true" data-shadow="true" data-disabled="false" data-role="popup" id="popupselfsigned" data-overlay-theme="a" data-theme="a" style="max-width:400px;" class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow">
+				<div role="banner" data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a">
+					<h2 aria-level="1" role="heading" class="ui-title translate">Certificates</h2>
+				</div>
+				<div role="main" data-role="content" data-theme="a" class="ui-corner-bottom ui-content ui-body-d">
+					<p class="translate">While you can set ownNote and other Apps to accept all SSL certificates, you should consider formally importing your certificate using the free Android application, CAdroid, available at the link below for increased security.</p>
+					<p><a href="market://details?id=at.bitfire.cadroid" target="_blank">CAdroid</a></p>
+					<a class="ui-btn ui-btn-up-c ui-shadow ui-btn-corner-all ui-btn-inline" data-wrapperels="span" data-iconshadow="true" data-shadow="true" data-corners="true" href="#" data-role="button" data-inline="true" data-rel="back" data-theme="a"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text translate">OK</span></span></a>    
+				</div>
+			</div>
+        </div>
+				
+		<div data-role="footer" style="display: none" data-id="listingfooter" id="listingfooter" data-position="fixed" data-tap-toggle="false" data-theme="a">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="javascript:create()" data-icon="plus" class="translate">New Note</a></li>
+					<li><a href="javascript:startSync()" data-icon="recycle" class="translate">Sync</a></li>
+					<li><a href="javascript:nav('groupslisting')" data-icon="tag" class="translate">Groups</a></li>
+					<!-- <li><a href="javascript:nav('noteslisting')" data-transition="none" data-icon="grid" class="ui-btn-active ui-state-persist translate">Notes</a></li> -->
+				</ul>
+			</div><!-- /navbar -->
+		</div><!-- /footer -->
+
+		<div data-role="footer" style="display: none" data-id="viewfooter" id="viewfooter" data-position="fixed" data-tap-toggle="false" data-theme="a">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="javascript:editNote()" data-icon="edit" class="translate">Edit</a></li>
+					<li><a href="javascript:renameN()" data-icon="bars" class="translate">Rename</a></li>
+					<li><a href="javascript:$('#popupdelete').popup('open')" data-icon="delete" class="translate">Delete</a></li>
+				</ul>
+			</div><!-- /navbar -->
+		</div><!-- /footer -->
+
+		<div id="menublock" onclick="hideMenus()">
+			<br>
+		</div>
+		
+		<div id="menu-listing" class="menu">
+				<div class="menu-link translate" onclick="$('#menu-listing').hide();logoutApp()">Logout</div>
+		</div>
+
+		<div id="menu-grouplisting" class="menu">
+				<div class="menu-link translate" onclick="$('#menu-grouplisting').hide();renameG()">Rename</div>
+				<div class="menu-row"><!-- --></div>
+				<div class="menu-link translate" onclick="$('#menu-grouplisting').hide();logoutApp()">Logout</div>
+		</div>
+		
+		<div id="menu-viewnote" class="menu">
+				<div class="menu-link translate" onclick="$('#menu-viewnote').hide();logoutApp()">Logout</div>
+		</div>
+
+		<div id="menu-editnote" class="menu">
+				<div class="menu-link translate" onclick="$('#menu-editnote').hide();backButton()">Save</div>
+				<div class="menu-row"><!-- --></div>
+				<div class="menu-link translate" onclick="$('#menu-editnote').hide();logoutApp()">Logout</div>
+		</div>
+
+		<input type="hidden" id="curNoteName" value="">
+		<input type="hidden" id="curNoteGroup" value="">
+		<input type="hidden" id="newNoteName" value="">
+		<input type="hidden" id="newNoteGroup" value="">
+		<input type="hidden" id="curNoteFilename" value="">
+
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+    </body>
+</html>
